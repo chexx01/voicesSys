@@ -14,6 +14,13 @@ jobs:
     steps:
     # 使用预制action：拉取最新的代码
     - uses: actions/checkout@v2
+    - name: node version
+        run: node -v
+    - name: npm version
+        run: npm -v
+    - uses: actions/setup-node@v2
+        with:
+          node-version: '16.18.1'
     # 步骤一的名称：
     - name: Install and Build
       # 该步骤运行的终端命令，进入仓库的src目录，安装依赖，运行编译命令
