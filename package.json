@@ -58,7 +58,7 @@
     "serve": "npm run dev",
     "dev": "vite",
     "build": "cross-env NODE_ENV=production vite build && esno ./build/script/postBuild.ts",
-    "build:elec": "esno ./build/script/startElectron.ts --env=production && electron-builder --linux deb tar.xz",
+    "build:elec": "esno ./build/script/startElectron.ts --env=production && electron-builder",
     "build:test": "cross-env vite build --mode test && esno ./build/script/postBuild.ts",
     "build:no-cache": "pnpm clean:cache && npm run build",
     "dev:app": "esno ./build/script/startElectron.ts --env=development --watch",
