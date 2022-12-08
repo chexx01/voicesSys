@@ -1,51 +1,51 @@
 # 此工作流的名字
-name: Build 
-# 工作流的执行时机，可以设定为定时执行，每次push后执行，手动执行等
-on:
-  # workflow_dispatch为在Github仓库的Actions面板中手动执行
-  workflow_dispatch:
-# 工作/任务，这里的工作是可以并行的。
-jobs:
-  # 工作的名称“编译windows版”
-  buildwin:
-    # 运行的操作系统 windows server 2022
-    runs-on: windows-latest
-    # 步骤
-    steps:
-    # 使用预制action：拉取最新的代码
-    - uses: actions/checkout@v2
-    - name: node version
-      run: node -v
-    - name: npm version
-      run: npm -v
-    - uses: actions/setup-node@v2
-      with:
-        node-version: '16.18.1'
-    # 步骤一的名称：
-    - name: Install-Yarn
-      run:
-        npm install -g yarn
-    - name: Yarn-version
-      run:
-        yarn -v
-    - name: Install
-      run:
-        yarn install
-    - name: Build
-      run:
-        yarn run build
-    - name: app
-      run:
-        yarn run build:elec
-    # 步骤二的名称：将编译后的结果上传
-    - name: Upload File
-      # 使用预制action：上传文件，可以将执行路径打包成zip上传
-      uses: actions/upload-artifact@v2
-      with:
-        # 上传后文件的名称
-        name: windows
-        # 打包的路径以及文件过滤，此为仅打包dist目录下的exe文件
-        path: dist/*exe
+# name: Build 
+# # 工作流的执行时机，可以设定为定时执行，每次push后执行，手动执行等
+# on:
+#   # workflow_dispatch为在Github仓库的Actions面板中手动执行
+#   workflow_dispatch:
+# # 工作/任务，这里的工作是可以并行的。
+# jobs:
+#   # 工作的名称“编译windows版”
+#   buildwin:
+#     # 运行的操作系统 windows server 2022
+#     runs-on: windows-latest
+#     # 步骤
+#     steps:
+#     # 使用预制action：拉取最新的代码
+#     - uses: actions/checkout@v2
+#     - name: node version
+#       run: node -v
+#     - name: npm version
+#       run: npm -v
+#     - uses: actions/setup-node@v2
+#       with:
+#         node-version: '16.18.1'
+#     # 步骤一的名称：
+#     - name: Install-Yarn
+#       run:
+#         npm install -g yarn
+#     - name: Yarn-version
+#       run:
+#         yarn -v
+#     - name: Install
+#       run:
+#         yarn install
+#     - name: Build
+#       run:
+#         yarn run build
+#     - name: app
+#       run:
+#         yarn run build:elec
+#     # 步骤二的名称：将编译后的结果上传
+#     - name: Upload File
+#       # 使用预制action：上传文件，可以将执行路径打包成zip上传
+#       uses: actions/upload-artifact@v2
+#       with:
+#         # 上传后文件的名称
+#         name: windows
+#         # 打包的路径以及文件过滤，此为仅打包dist目录下的exe文件
+#         path: dist/*exe
     # - name: Release
     #     uses: softprops/action-gh-release@v1
     #     with:
@@ -74,3 +74,55 @@ jobs:
   #       name: mac
   #       # 打包的路径以及文件过滤，此为仅打包dist目录下的dmg文件
   #       path: dist/*dmg
+
+name: Build
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - "**.md"
+      - "**.spec.js"
+      - ".idea"
+      - ".vscode"
+      - ".dockerignore"
+      - "Dockerfile"
+      - ".gitignore"
+      - ".github/**"
+      - "!.github/workflows/build.yml"
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        # os: [windows-latest, macos-latest, ubuntu-latest]
+        os: [windows-latest]
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with: 
+          node-version: 16.18.1
+      - name: node version
+        run: node -v
+      - name: Install-Yarn
+        run: npm install -g yarn
+      - name: Yarn-version
+        run: yarn -v
+      - name: Install Dependencies
+        run: yarn install
+      - name: Build Release Files
+        run: yarn run build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: app
+        run: yarn run build:elec
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: release_on_${{ matrix. os }}
+          # 打包的路径以及文件过滤，此为仅打包dist目录下的exe文件
+          # path: dist/*exe
+          path: release/
+          retention-days: 5
