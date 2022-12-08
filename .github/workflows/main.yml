@@ -9,7 +9,7 @@ jobs:
   # 工作的名称“编译windows版”
   buildwin:
     # 运行的操作系统 windows server 2022
-    runs-on: windows-2022
+    runs-on: windows-latest
     # 步骤
     steps:
     # 使用预制action：拉取最新的代码
@@ -24,7 +24,7 @@ jobs:
     # 步骤一的名称：
     - name: Install
       run:
-        npm install
+        npm install --force
     - name: Build
       run:
         npm run build
