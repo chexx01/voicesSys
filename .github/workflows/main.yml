@@ -22,15 +22,21 @@ jobs:
       with:
         node-version: '16.18.1'
     # 步骤一的名称：
+    - name: Install-Yarn
+      run:
+        npm install -g yarn
+    - name: Yarn-version
+      run:
+        yarn -v
     - name: Install
       run:
-        npm install --force
+        yarn install
     - name: Build
       run:
-        npm run build
+        yarn run build
     - name: app
       run:
-        npm run build:elec
+        yarn run build:elec
   #   # 步骤二的名称：将编译后的结果上传
   #   - name: Upload File
   #     # 使用预制action：上传文件，可以将执行路径打包成zip上传
