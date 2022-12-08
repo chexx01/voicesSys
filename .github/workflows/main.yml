@@ -124,7 +124,7 @@ jobs:
         with:
           name: release_on_${{ matrix. os }}
           # 打包的路径以及文件过滤，此为仅打包dist目录下的exe文件
-          path: release/
+          path: ./dist/*
           retention-days: 5
       # - name: release
       #   uses: softprops/action-gh-release@v1
