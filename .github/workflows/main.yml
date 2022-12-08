@@ -37,15 +37,21 @@ jobs:
     - name: app
       run:
         yarn run build:elec
-  #   # 步骤二的名称：将编译后的结果上传
-  #   - name: Upload File
-  #     # 使用预制action：上传文件，可以将执行路径打包成zip上传
-  #     uses: actions/upload-artifact@v2
-  #     with:
-  #       # 上传后文件的名称
-  #       name: windows
-  #       # 打包的路径以及文件过滤，此为仅打包dist目录下的exe文件
-  #       path: dist/*exe
+    # 步骤二的名称：将编译后的结果上传
+    - name: Upload File
+      # 使用预制action：上传文件，可以将执行路径打包成zip上传
+      uses: actions/upload-artifact@v2
+      with:
+        # 上传后文件的名称
+        name: windows
+        # 打包的路径以及文件过滤，此为仅打包dist目录下的exe文件
+        path: dist/*exe
+    # - name: Release
+    #     uses: softprops/action-gh-release@v1
+    #     with:
+    #       files: ./dist/*
+    #     env:
+    #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   # # 工作的名称“编译macOS版”
   # buildmac:
   #   # 运行的操作系统 macOS BigSur
