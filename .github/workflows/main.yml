@@ -133,18 +133,28 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BT_TOKEN: ${{ secrets.BT_TOKEN }}
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: release_on_${{ matrix. os }}
-          # 打包的路径以及文件过滤，此为仅打包dist目录下的exe文件
-          path: ./dist/*
-          retention-days: 5
-      - name: release
-        uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
-        with:
-          files: dist/*
+      - name: Sync to Gitee
+        uses: wearerequired/git-mirror-action@master
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          # 注意在 Settings->Secrets 配置 GITEE_RSA_PRIVATE_KEY
+          SSH_PRIVATE_KEY: ${{ secrets.GITEE_RSA_PRIVATE_KEY }}
+        with:
+          # 注意替换为你的 GitHub 源仓库地址
+          source-repo: git@github.com:chexx01/voicesSys.git
+          # 注意替换为你的 Gitee 目标仓库地址
+          destination-repo: git@gitee.com:che-xiao/voice-sys.git
+      # - name: Upload Artifact
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: release_on_${{ matrix. os }}
+      #     # 打包的路径以及文件过滤，此为仅打包dist目录下的exe文件
+      #     path: ./dist/*
+      #     retention-days: 5
+      # - name: release
+      #   uses: softprops/action-gh-release@v1
+      #   if: startsWith(github.ref, 'refs/tags/')
+      #   with:
+      #     files: dist/*
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     # GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
