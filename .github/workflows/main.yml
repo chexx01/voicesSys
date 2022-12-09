@@ -111,7 +111,7 @@ jobs:
         run: npm install -g yarn
       - name: Yarn-version
         run: yarn -v
-       - name: Cache file
+      - name: Cache file
         uses: actions/cache@v2
         with:
           path: |
@@ -119,9 +119,9 @@ jobs:
             %APPDATA%\npm-cache
             %LOCALAPPDATA%\electron\Cache
             %LOCALAPPDATA%\electron-builder\Cache
-          key: ${{ runner.os }}-build-caches-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ matrix.os }}-build-caches-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-build-
+            ${{ matrix.os }}-build-
       - name: Install Dependencies
         run: yarn install
       - name: Build Release Files
