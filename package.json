@@ -1,10 +1,10 @@
 {
   "name": "voicesys",
-  "version": "2.8.0",
+  "version": "v0.0.1",
   "author": {
-    "name": "voicesys",
+    "name": "chexx01",
     "email": "huangcl@suitui.com",
-    "url": "https://10.8.200.3:9999/web"
+    "url": "https://github.com/chexx01/voicesSys"
   },
   "main": "dist/main/build.js",
   "build": {
@@ -18,8 +18,12 @@
     ],
     "publish": [
       {
-        "provider": "generic",
-        "url": "https://10.8.200.3:9999/web/voicesys"
+        "provider": "github",
+        "owner": "chexx01",
+        "repo": "voicesSys",
+        "private": true,
+        "token": "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",
+        "releaseType": "release"
       }
     ],
     "asar": false,
@@ -58,7 +62,7 @@
     "serve": "npm run dev",
     "dev": "vite",
     "build": "cross-env NODE_ENV=production vite build && esno ./build/script/postBuild.ts",
-    "build:elec": "esno ./build/script/startElectron.ts --env=production && electron-builder",
+    "build:release": "esno ./build/script/startElectron.ts --env=production && electron-builder --publish always",
     "build:test": "cross-env vite build --mode test && esno ./build/script/postBuild.ts",
     "build:no-cache": "pnpm clean:cache && npm run build",
     "dev:app": "esno ./build/script/startElectron.ts --env=development --watch",
