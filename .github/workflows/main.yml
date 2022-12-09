@@ -1,6 +1,6 @@
 name: Build
 on:
-  # workflow_dispatch:
+  workflow_dispatch:
   push:
     branches: [master]
     paths-ignore:
@@ -19,8 +19,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        # os: [windows-latest, macos-latest, ubuntu-latest]
-        os: [windows-latest, macos-latest]
+        os: [windows-latest, macos-latest, ubuntu-latest]
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
@@ -56,6 +55,17 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BT_TOKEN: ${{ secrets.BT_TOKEN }}
+      - name: Sync to Gitee
+      if: ${{ matrix.os }} == 'ubuntu-latest'
+      uses: wearerequired/git-mirror-action@master
+      env:
+        # 注意在 Settings->Secrets 配置 GITEE_RSA_PRIVATE_KEY
+        SSH_PRIVATE_KEY: ${{ secrets.GITEE_RSA_PRIVATE_KEY }}
+      with:
+        # 注意替换为你的 GitHub 源仓库地址
+        source-repo: git@github.com:chexx01/voicesSys.git
+        # 注意替换为你的 Gitee 目标仓库地址
+        destination-repo: git@gitee.com:che-xiao/voice-sys.git
       # - name: Upload Artifact
       #   uses: actions/upload-artifact@v3
       #   with:
@@ -71,16 +81,3 @@ jobs:
       #   env:
       #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       #     # GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-# jobs: 
-#   build-deploy:
-#     steps:
-#       - name: Sync to Gitee
-#       uses: wearerequired/git-mirror-action@master
-#       env:
-#         # 注意在 Settings->Secrets 配置 GITEE_RSA_PRIVATE_KEY
-#         SSH_PRIVATE_KEY: ${{ secrets.GITEE_RSA_PRIVATE_KEY }}
-#       with:
-#         # 注意替换为你的 GitHub 源仓库地址
-#         source-repo: git@github.com:chexx01/voicesSys.git
-#         # 注意替换为你的 Gitee 目标仓库地址
-#         destination-repo: git@gitee.com:che-xiao/voice-sys.git
