@@ -1,25 +1,26 @@
 name: Build
 on:
   workflow_dispatch:
-  push:
-    branches: [master]
-    paths-ignore:
-      - "**.md"
-      - "**.spec.js"
-      - ".idea"
-      - ".vscode"
-      - ".dockerignore"
-      - "Dockerfile"
-      - ".gitignore"
-      - ".github/**"
-      - "!.github/workflows/build.yml"
+#   push:
+#     branches: [master]
+#     paths-ignore:
+#       - "**.md"
+#       - "**.spec.js"
+#       - ".idea"
+#       - ".vscode"
+#       - ".dockerignore"
+#       - "Dockerfile"
+#       - ".gitignore"
+#       - ".github/**"
+#       - "!.github/workflows/build.yml"
 
 jobs:
   build:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [windows-latest, macos-latest, ubuntu-latest]
+#         os: [windows-latest, macos-latest, ubuntu-latest]
+        os: [windows-latest]
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
@@ -33,17 +34,17 @@ jobs:
         run: npm install -g yarn
       - name: Yarn-version
         run: yarn -v
-      - name: Cache file
-        uses: actions/cache@v2
-        with:
-          path: |
-            node_modules
-            %APPDATA%\npm-cache
-            %LOCALAPPDATA%\electron\Cache
-            %LOCALAPPDATA%\electron-builder\Cache
-          key: ${{ matrix.os }}-build-caches-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ matrix.os }}-build-
+#       - name: Cache file
+#         uses: actions/cache@v2
+#         with:
+#           path: |
+#             node_modules
+#             %APPDATA%\npm-cache
+#             %LOCALAPPDATA%\electron\Cache
+#             %LOCALAPPDATA%\electron-builder\Cache
+#           key: ${{ matrix.os }}-build-caches-${{ hashFiles('**/package-lock.json') }}
+#           restore-keys: |
+#             ${{ matrix.os }}-build-
       - name: Install Dependencies
         run: yarn install
       - name: Build Release Files
@@ -55,17 +56,17 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BT_TOKEN: ${{ secrets.BT_TOKEN }}
-      - name: Sync to Gitee
-        if: ${{ matrix.os }} == 'ubuntu-latest'
-        uses: wearerequired/git-mirror-action@master
-        env:
-          # 注意在 Settings->Secrets 配置 GITEE_RSA_PRIVATE_KEY
-          SSH_PRIVATE_KEY: ${{ secrets.GITEE_RSA_PRIVATE_KEY }}
-        with:
-          # 注意替换为你的 GitHub 源仓库地址
-          source-repo: git@github.com:chexx01/voicesSys.git
-          # 注意替换为你的 Gitee 目标仓库地址
-          destination-repo: git@gitee.com:che-xiao/voice-sys.git
+#       - name: Sync to Gitee
+#         if: ${{ matrix.os }} == 'ubuntu-latest'
+#         uses: wearerequired/git-mirror-action@master
+#         env:
+#           # 注意在 Settings->Secrets 配置 GITEE_RSA_PRIVATE_KEY
+#           SSH_PRIVATE_KEY: ${{ secrets.GITEE_RSA_PRIVATE_KEY }}
+#         with:
+#           # 注意替换为你的 GitHub 源仓库地址
+#           source-repo: git@github.com:chexx01/voicesSys.git
+#           # 注意替换为你的 Gitee 目标仓库地址
+#           destination-repo: git@gitee.com:che-xiao/voice-sys.git
       # - name: Upload Artifact
       #   uses: actions/upload-artifact@v3
       #   with:
