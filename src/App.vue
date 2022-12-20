@@ -1,12 +1,5 @@
-<!--
- * @Date: 2022-12-07 16:43:32
- * @LastEditors: chexx
- * @LastEditTime: 2022-12-09 17:22:57
- * @FilePath: \voicesSys\src\App.vue
--->
 <template>
   <ConfigProvider :locale="getAntdLocale">
-    <!-- -->
     <AppProvider>
       <RouterView />
     </AppProvider>

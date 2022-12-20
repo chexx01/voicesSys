@@ -1,3 +1,9 @@
+/*
+ * @Date: 2022-12-05 10:02:01
+ * @LastEditors: chexx
+ * @LastEditTime: 2022-12-20 09:02:36
+ * @FilePath: \voicesys\build\config\rollupElectronConfig.ts
+ */
 import path from 'path';
 import { RollupOptions } from 'rollup';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
@@ -10,7 +16,7 @@ export function getRollupOptions(): RollupOptions {
   return {
     input: path.join(__dirname, '../../electron-main/index.ts'),
     output: {
-      file: path.join(__dirname, '../../dist/main/build.js'),
+      file: path.join(__dirname, '../../pack/main/build.js'),
       format: 'cjs',
       name: 'ElectronMainBundle',
       sourcemap: true,
@@ -58,6 +64,7 @@ export function getRollupOptions(): RollupOptions {
       'https',
       'path',
       'electron',
+      'electron-updater',
     ],
   };
 }

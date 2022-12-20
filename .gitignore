@@ -3,7 +3,7 @@ node_modules
 dist
 .npmrc
 .cache
-
+pack
 tests/server/static
 tests/server/static/upload
 
