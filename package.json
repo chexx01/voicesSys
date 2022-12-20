@@ -1,20 +1,19 @@
 {
   "name": "voicesys",
-  "version": "v0.0.3",
+  "version": "0.0.5",
   "author": {
-    "name": "chexx01",
+    "name": "voicesys",
     "email": "huangcl@suitui.com",
     "url": "https://github.com/chexx01/voicesSys"
   },
-  "main": "dist/main/build.js",
+  "main": "pack/main/build.js",
   "build": {
     "appId": "com.voicesys.app",
     "electronDownload": {
       "mirror": "https://npm.taobao.org/mirrors/electron/"
     },
     "files": [
-      "!node_modules",
-      "dist/**"
+      "pack/**"
     ],
     "publish": [
       {
@@ -23,7 +22,9 @@
         "repo": "voicesSys",
         "private": true,
         "token": "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",
-        "releaseType": "release"
+        "releaseType": "release",
+        "channel": "latest",
+        "url": "http://1.117.107.94/win/"
       }
     ],
     "asar": false,
@@ -62,13 +63,12 @@
     "serve": "npm run dev",
     "dev": "vite",
     "build": "cross-env NODE_ENV=production vite build && esno ./build/script/postBuild.ts",
-    "build:release": "esno ./build/script/startElectron.ts --env=production && electron-builder --publish always",
+    "build:elec": "esno ./build/script/startElectron.ts --env=production && electron-builder ",
     "build:test": "cross-env vite build --mode test && esno ./build/script/postBuild.ts",
     "build:no-cache": "pnpm clean:cache && npm run build",
     "dev:app": "esno ./build/script/startElectron.ts --env=development --watch",
-    "build:app": "npm run build && esno ./build/script/startElectron.ts --env=production && electron-builder ",
-    "build:dmg": "npm run build && esno ./build/script/startElectron.ts --env=production && electron-builder -m=dmg -p onTagOrDraft",
-    "build:win": "esno ./build/script/startElectron.ts --env=production && cross-env TARGET=Setup ARCH=x86 electron-builder -w=nsis --ia32 -p never",
+    "build:app": "rimraf dist && esno ./build/script/startElectron.ts --env=production && electron-builder ",
+    "build:release": "rimraf dist && esno ./build/script/startElectron.ts --env=production && electron-builder --publish always",
     "report": "cross-env REPORT=true npm run build",
     "type:check": "vue-tsc --noEmit --skipLibCheck",
     "preview": "npm run build && vite preview",
@@ -106,6 +106,7 @@
     "crypto-js": "^4.1.1",
     "dayjs": "^1.11.0",
     "echarts": "^5.2.0",
+    "electron-updater": "4.3.5",
     "intro.js": "^4.2.2",
     "lodash-es": "^4.17.21",
     "mockjs": "^1.1.0",
