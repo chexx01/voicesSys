@@ -66,7 +66,7 @@
     "build:no-cache": "pnpm clean:cache && npm run build",
     "dev:app": "esno ./build/script/startElectron.ts --env=development --watch",
     "build:app": "rimraf dist && esno ./build/script/startElectron.ts --env=production && electron-builder ",
-    "build:release": "rimraf dist && esno ./build/script/startElectron.ts --env=production && electron-builder --publish always",
+    "build:release": "esno ./build/script/startElectron.ts --env=production && electron-builder --publish always",
     "report": "cross-env REPORT=true npm run build",
     "type:check": "vue-tsc --noEmit --skipLibCheck",
     "preview": "npm run build && vite preview",
