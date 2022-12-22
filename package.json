@@ -1,9 +1,9 @@
 {
   "name": "voicesys",
-  "version": "v1.0.0",
+  "version": "v0.0.1",
   "author": {
     "name": "voicesys",
-    "email": "huangcl@suitui.com",
+    "email": "a985046147@163.com",
     "url": "https://github.com/chexx01/voicesSys"
   },
   "main": "pack/main/build.js",
@@ -222,13 +222,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://10.8.200.3:9999/web/voicesys.git"
+    "url": "git+https://github.com/chexx01/voicesSys.git"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/anncwb/vue-vben-admin/issues"
+    "url": "https://github.com/chexx01/voicesSys/issues"
   },
-  "homepage": "https://10.8.200.3:9999/web/voicesys",
+  "homepage": "https://github.com/chexx01/voicesSys",
   "engines": {
     "node": "^12 || >=14"
   }
