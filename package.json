@@ -15,6 +15,16 @@
     "files": [
       "pack/**"
     ],
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "chexx01",
+        "repo": "voicesSys",
+        "private": false,
+        "token": "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",
+        "releaseType": "release"
+      }
+    ],
     "asar": false,
     "mac": {
       "artifactName": "${productName}_setup_${version}.${ext}",
