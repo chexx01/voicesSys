@@ -20,8 +20,6 @@
         "provider": "github",
         "owner": "chexx01",
         "repo": "voicesSys",
-        "private": true,
-        "token": "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",
         "releaseType": "release"
       }
     ],
