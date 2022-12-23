@@ -15,14 +15,6 @@
     "files": [
       "pack/**"
     ],
-    "publish": [
-      {
-        "provider": "github",
-        "owner": "chexx01",
-        "repo": "voicesSys",
-        "releaseType": "release"
-      }
-    ],
     "asar": false,
     "mac": {
       "artifactName": "${productName}_setup_${version}.${ext}",
